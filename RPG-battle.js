@@ -75,13 +75,29 @@ function randomAction() {
 }
 
 function actionMonster() {
-  console.log(`Лютый использует ` + randomAction().name);
+  monster.action = randomAction().name;
+  console.log(`Лютый использует ` + monster.action);
+  resultAction(monster, wizard);
 }
 
 function actionWizard() {
   let numberAction = readlineSync.question(`Enter a number action (0 - `
     + (wizard.moves.length - 1) + `): `);
-  console.log(`Евстафий использует ` + wizard.moves[numberAction].name);
+  wizard.action = wizard.moves[numberAction].name;
+  console.log(`Евстафий использует ` + wizard.action);
+  resultAction(wizard, monster);
+}
+
+function resultAction(player1, player2) {
+  if ((`action` in player1) && (`action` in player2)) {
+    let actionPlayer1 = player1.moves.find(item => item.name === player1.action);
+    let actionPlayer2 = player2.moves.find(item => item.name === player2.action);
+    let physicalDmg = actionPlayer2.physicalDmg
+      - Math.round(actionPlayer2.physicalDmg * actionPlayer1.physicArmorPercents / 100);
+    let magicDmg = actionPlayer2.magicDmg
+      - Math.round(actionPlayer2.magicDmg * actionPlayer1.magicArmorPercents / 100);
+    player1.maxHealth -= physicalDmg + magicDmg;
+  }
 }
 
 function play() {
@@ -89,6 +105,15 @@ function play() {
   while (true) {
     actionMonster();
     actionWizard();
+    console.log(wizard.maxHealth + `  ` + monster.maxHealth);
+    if (wizard.maxHealth <= 0) {
+      console.log(`Вы проиграли`);
+      return;
+    }
+    if (monster.maxHealth <= 0) {
+      console.log(`Вы победили`);
+      return;
+    }
   }
 }
 

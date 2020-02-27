@@ -67,3 +67,29 @@ const wizard = {
     },
   ]
 }
+
+const readlineSync = require(`readline-sync`);
+
+function randomAction() {
+  return monster.moves[Math.round(Math.random() * (monster.moves.length - 1))];
+}
+
+function actionMonster() {
+  console.log(`Лютый использует ` + randomAction().name);
+}
+
+function actionWizard() {
+  let numberAction = readlineSync.question(`Enter a number action (0 - `
+    + (wizard.moves.length - 1) + `): `);
+  console.log(`Евстафий использует ` + wizard.moves[numberAction].name);
+}
+
+function play() {
+  wizard.maxHealth = readlineSync.question(`Enter a maxHealth: `);
+  while (true) {
+    actionMonster();
+    actionWizard();
+  }
+}
+
+play();

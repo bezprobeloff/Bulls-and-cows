@@ -71,12 +71,19 @@ const wizard = {
 const readlineSync = require(`readline-sync`);
 
 function randomAction() {
-  return monster.moves[Math.round(Math.random() * (monster.moves.length - 1))];
+  const arrAction = monster.moves.filter((item) => {
+    if (!(`counterMove` in item))
+      return item;
+  }).map((item) => item.name);
+
+  return arrAction[Math.round(Math.random() * (arrAction.length - 1))];
 }
 
 function actionMonster() {
-  monster.action = randomAction().name;
-  let monsterMove = monster.moves.find(item => item.name === monster.action);
+  let monsterMove;
+
+  monster.action = randomAction();
+  monsterMove = monster.moves.find(item => item.name === monster.action);
 
   console.log(monster.name + ` использует ` + monster.action);
   updateCounterMove(monster.moves);
@@ -86,7 +93,8 @@ function actionMonster() {
 
 function actionWizard() {
   messageSelectAction();
-  let numberAction = readlineSync.question(`Enter a number action (0 - `
+  let numberAction;
+  numberAction = readlineSync.question(`Enter a number action (0 - `
     + (wizard.moves.length - 1) + `): `);
   wizard.action = wizard.moves[numberAction].name;
   let wizardMove = wizard.moves.find(item => item.name === wizard.action);
@@ -96,9 +104,15 @@ function actionWizard() {
   resultAction(wizard, monster);
 }
 
+function selectAction() {
+
+}
+
 function messageSelectAction() {
   let actions = wizard.moves.reduce((action, current, index, array) => {
-    if (index === array.length - 1) {
+    if (`counterMove` in current) {
+      return action;
+    } else if (index === array.length - 1) {
       return action + current.name + ` - ` + index;
     } else {
       return action + current.name + ` - ` + index + `, `;
@@ -123,6 +137,14 @@ function updateCounterMove(playerMoves) {
       }
     }
   });
+}
+
+//Проверка на разрешение хода
+function checkSelectMove(playerMove) {
+  if (`counterMove` in playerMove) {
+    return false;
+  }
+  return true;
 }
 
 function resultAction(player, attacker) {

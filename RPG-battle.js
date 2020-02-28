@@ -70,6 +70,7 @@ const wizard = {
 
 const readlineSync = require(`readline-sync`);
 
+//Генерация действия для монстра
 function randomAction() {
   const arrAction = monster.moves.filter((item) => {
     if (!(`counterMove` in item))
@@ -79,6 +80,7 @@ function randomAction() {
   return arrAction[Math.round(Math.random() * (arrAction.length - 1))];
 }
 
+//Действия монстра
 function actionMonster() {
   let monsterMove;
 
@@ -91,11 +93,11 @@ function actionMonster() {
   resultAction(monster, wizard);
 }
 
+//Действия мага
 function actionWizard() {
   messageSelectAction();
   let numberAction;
-  numberAction = readlineSync.question(`Enter a number action (0 - `
-    + (wizard.moves.length - 1) + `): `);
+  numberAction = readlineSync.question(`Enter a number action: `);
   wizard.action = wizard.moves[numberAction].name;
   let wizardMove = wizard.moves.find(item => item.name === wizard.action);
   console.log(wizard.name + ` использует ` + wizard.action);
@@ -104,10 +106,7 @@ function actionWizard() {
   resultAction(wizard, monster);
 }
 
-function selectAction() {
-
-}
-
+//Предлагает возможные варианты действий
 function messageSelectAction() {
   let actions = wizard.moves.reduce((action, current, index, array) => {
     if (`counterMove` in current) {
@@ -121,12 +120,14 @@ function messageSelectAction() {
   console.log(`Вам доступны действия: ` + actions);
 }
 
+//Добавим счетчик кулдауна
 function addCounterMove(playerMove) {
   if (playerMove.cooldown > 0) {
     playerMove.counterMove = playerMove.cooldown;
   }
 }
 
+//Обновим счетчик кулдаунов
 function updateCounterMove(playerMoves) {
   playerMoves.forEach((item) => {
     if (`counterMove` in item) {
@@ -139,14 +140,7 @@ function updateCounterMove(playerMoves) {
   });
 }
 
-//Проверка на разрешение хода
-function checkSelectMove(playerMove) {
-  if (`counterMove` in playerMove) {
-    return false;
-  }
-  return true;
-}
-
+//Результат действия противников
 function resultAction(player, attacker) {
   if ((`action` in player) && (`action` in attacker)) {
     let actionPlayer = player.moves.find(item => item.name === player.action);
@@ -157,22 +151,19 @@ function resultAction(player, attacker) {
       - Math.round(actionAttacker.magicDmg * actionPlayer.magicArmorPercents / 100);
     player.maxHealth -= physicalDmg + magicDmg;
   }
+  if (monster.maxHealth <= 0 || wizard.maxHealth <= 0) {
+    (monster.maxHealth <= 0) ? console.log(`Вы победили`) : console.log(`Вы проиграли`);
+  }
 }
 
+//Точка входа. Начало игры
 function play() {
   wizard.maxHealth = readlineSync.question(`Enter a maxHealth: `);
   while (true) {
+    if (monster.maxHealth <= 0 || wizard.maxHealth <= 0) return;
     actionMonster();
+    if (monster.maxHealth <= 0 || wizard.maxHealth <= 0) return;
     actionWizard();
-    console.log(wizard.maxHealth + `  ` + monster.maxHealth);
-    if (wizard.maxHealth <= 0) {
-      console.log(`Вы проиграли`);
-      return;
-    }
-    if (monster.maxHealth <= 0) {
-      console.log(`Вы победили`);
-      return;
-    }
   }
 }
 

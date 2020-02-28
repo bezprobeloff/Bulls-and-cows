@@ -76,16 +76,53 @@ function randomAction() {
 
 function actionMonster() {
   monster.action = randomAction().name;
-  console.log(`Лютый использует ` + monster.action);
+  let monsterMove = monster.moves.find(item => item.name === monster.action);
+
+  console.log(monster.name + ` использует ` + monster.action);
+  updateCounterMove(monster.moves);
+  addCounterMove(monsterMove);
   resultAction(monster, wizard);
 }
 
 function actionWizard() {
+  messageSelectAction();
   let numberAction = readlineSync.question(`Enter a number action (0 - `
     + (wizard.moves.length - 1) + `): `);
   wizard.action = wizard.moves[numberAction].name;
-  console.log(`Евстафий использует ` + wizard.action);
+  let wizardMove = wizard.moves.find(item => item.name === wizard.action);
+  console.log(wizard.name + ` использует ` + wizard.action);
+  updateCounterMove(wizard.moves);
+  addCounterMove(wizardMove);
   resultAction(wizard, monster);
+}
+
+function messageSelectAction() {
+  let actions = wizard.moves.reduce((action, current, index, array) => {
+    if (index === array.length - 1) {
+      return action + current.name + ` - ` + index;
+    } else {
+      return action + current.name + ` - ` + index + `, `;
+    }
+  }, ``);
+  console.log(`Вам доступны действия: ` + actions);
+}
+
+function addCounterMove(playerMove) {
+  if (playerMove.cooldown > 0) {
+    playerMove.counterMove = playerMove.cooldown;
+  }
+}
+
+function updateCounterMove(playerMoves) {
+  playerMoves.forEach((item) => {
+    if (`counterMove` in item) {
+      if (item.counterMove === 1) {
+        delete item[`counterMove`];
+      } else if (item.counterMove > 1) {
+        item.counterMove--;
+      }
+    }
+  });
 }
 
 function resultAction(player, attacker) {

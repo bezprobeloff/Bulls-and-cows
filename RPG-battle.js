@@ -108,15 +108,27 @@ function actionWizard() {
 
 //Предлагает возможные варианты действий
 function messageSelectAction() {
-  let actions = wizard.moves.reduce((action, current, index, array) => {
-    if (`counterMove` in current) {
-      return action;
-    } else if (index === array.length - 1) {
-      return action + current.name + ` - ` + index;
-    } else {
-      return action + current.name + ` - ` + index + `, `;
-    }
-  }, ``);
+  let actions = wizard.moves
+    //фильтруем массив на разрешенные действия
+    .filter((item) => {
+      if (!(`counterMove` in item))
+        return item;
+    })
+    //генерим текст доступных действий
+    .reduce((action, current, index, array) => {
+      let countAction;
+      wizard.moves.find((item, index) => {
+        if(item.name === current.name) {
+          countAction = index;
+        }
+      });
+      if (index === array.length - 1) {
+        return action + current.name + ` - ` + countAction;
+      } else {
+        return action + current.name + ` - ` + countAction + `, `;
+      }
+    }, ``);
+
   console.log(`Вам доступны действия: ` + actions);
 }
 

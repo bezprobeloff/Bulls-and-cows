@@ -1,11 +1,13 @@
 const fs = require(`fs`);
 const path = require(`path`);
+const readlineSync = require(`readline-sync`);
 //путь к своей папке
 const rootPath = path.dirname(path.resolve(`quiz.js`));
 const numberQuestions = 5;
 
 function play() {
   try {
+    let countTrueAnswer = 0;
     const questionsPath = path.join(rootPath, `questions`);
     const isFile = fileName => {
       return fs.lstatSync(fileName).isFile()
@@ -20,16 +22,25 @@ function play() {
     counterQuestions = numberQuestions;
     while (counterQuestions-- && listFiles.length > 0) {
       const data = fs.readFileSync(path.join(questionsPath, `1.txt`)).toString();
-      console.log(data.split(`\n`));
+      let trueAnswer = ``;
+      data.split(`\n`).forEach((item, index) => {
+        if (index === 0) {
+          console.log(item);
+        } else if (index === 1) {
+          trueAnswer = item;
+        } else {
+          console.log(item);
+        }
+      });
+      const answerUser = readlineSync.question(`Enter a number answer: `);
+      if (trueAnswer === answerUser) {
+        countTrueAnswer++;
+      }
     }
-
-
-
+    console.log(`Количество правильных ответов: ${countTrueAnswer}`);
   } catch (err) {
     console.error(err);
   }
 }
 
 play();
-
-

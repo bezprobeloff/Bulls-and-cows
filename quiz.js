@@ -4,6 +4,12 @@ const readlineSync = require(`readline-sync`);
 //путь к своей папке
 const rootPath = path.dirname(path.resolve(`quiz.js`));
 const numberQuestions = 5;
+let listFiles = [];
+
+//Генерация выбора вопроса
+function randomQuestion() {
+  return Math.round(Math.random() * (listFiles.length - 1));
+}
 
 function play() {
   try {
@@ -13,7 +19,7 @@ function play() {
       return fs.lstatSync(fileName).isFile()
     }
 
-    let listFiles = fs.readdirSync(questionsPath)
+    listFiles = fs.readdirSync(questionsPath)
       .map(fileName => {
         return path.join(questionsPath, fileName);
       })
@@ -21,7 +27,9 @@ function play() {
 
     counterQuestions = numberQuestions;
     while (counterQuestions-- && listFiles.length > 0) {
-      const data = fs.readFileSync(path.join(questionsPath, `1.txt`)).toString();
+      const question = randomQuestion();
+      const data = fs.readFileSync(listFiles[question]).toString();
+      listFiles.splice(question, 1);
       let trueAnswer = ``;
       data.split(`\n`).forEach((item, index) => {
         if (index === 0) {

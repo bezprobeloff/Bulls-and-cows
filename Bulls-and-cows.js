@@ -1,5 +1,5 @@
 let numberUser;
-let numberSecret = `538902`;
+const numberSecret = `538902`;
 const countMoves = 3;
 const countDigits = numberSecret.toString().length;
 
@@ -13,13 +13,13 @@ function play() {
       console.log(`Вы выиграли.`);
       return;
     } else if (countDigits === numberUser.toString().length) {
-      let arrDigitsInPlace = Array.from(numberUser).filter(function(item, index) {
+      const arrDigitsInPlace = Array.from(numberUser).filter(function(item, index) {
         if (item === numberSecret[index]) {
           return item;
         }
       });
 
-      let arrDigitsNotInPlace = Array.from(numberUser).filter(function(item, index) {
+      const arrDigitsNotInPlace = Array.from(numberUser).filter(function(item, index) {
         if ((item !== numberSecret[index]) && (numberSecret.includes(item))) {
           return item;
         }

@@ -1,0 +1,23 @@
+{
+  "name": "test-node.js-nn",
+  "version": "1.0.0",
+  "description": "Тестовый проект",
+  "main": "Bulls-and-cows.js",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bezprobeloff/Test-Node.JS-NN.git"
+  },
+  "author": "bezprobeloff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bezprobeloff/Test-Node.JS-NN/issues"
+  },
+  "homepage": "https://github.com/bezprobeloff/Test-Node.JS-NN#readme"
+}

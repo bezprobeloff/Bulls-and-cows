@@ -82,10 +82,8 @@ function randomAction() {
 
 //Действия монстра
 function actionMonster() {
-  let monsterMove;
-
   monster.action = randomAction();
-  monsterMove = monster.moves.find(item => item.name === monster.action);
+  const monsterMove = monster.moves.find(item => item.name === monster.action);
 
   console.log(monster.name + ` использует ` + monster.action);
   updateCounterMove(monster.moves);
@@ -96,10 +94,9 @@ function actionMonster() {
 //Действия мага
 function actionWizard() {
   messageSelectAction();
-  let numberAction;
-  numberAction = readlineSync.question(`Enter a number action: `);
+  const numberAction = readlineSync.question(`Enter a number action: `);
   wizard.action = wizard.moves[numberAction].name;
-  let wizardMove = wizard.moves.find(item => item.name === wizard.action);
+  const wizardMove = wizard.moves.find(item => item.name === wizard.action);
   console.log(wizard.name + ` использует ` + wizard.action);
   updateCounterMove(wizard.moves);
   addCounterMove(wizardMove);
@@ -108,7 +105,7 @@ function actionWizard() {
 
 //Предлагает возможные варианты действий
 function messageSelectAction() {
-  let actions = wizard.moves
+  const actions = wizard.moves
     //фильтруем массив на разрешенные действия
     .filter((item) => {
       if (!(`counterMove` in item))
@@ -155,13 +152,13 @@ function updateCounterMove(playerMoves) {
 //Результат действия противников
 function resultAction(player, attacker) {
   if ((`action` in player) && (`action` in attacker)) {
-    let actionPlayer = player.moves.find(item => item.name === player.action);
-    let actionAttacker = attacker.moves.find(item => item.name === attacker.action);
-    let physicalDmg = actionAttacker.physicalDmg
+    const actionPlayer = player.moves.find(item => item.name === player.action);
+    const actionAttacker = attacker.moves.find(item => item.name === attacker.action);
+    const physicalDmg = actionAttacker.physicalDmg
       - Math.round(actionAttacker.physicalDmg * actionPlayer.physicArmorPercents / 100);
-    let magicDmg = actionAttacker.magicDmg
+    const magicDmg = actionAttacker.magicDmg
       - Math.round(actionAttacker.magicDmg * actionPlayer.magicArmorPercents / 100);
-    player.maxHealth -= physicalDmg + magicDmg;
+    player.maxHealth -= (physicalDmg + magicDmg);
   }
   if (monster.maxHealth <= 0 || wizard.maxHealth <= 0) {
     (monster.maxHealth <= 0) ? console.log(`Вы победили`) : console.log(`Вы проиграли`);

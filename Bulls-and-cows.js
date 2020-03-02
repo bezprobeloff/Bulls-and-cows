@@ -7,8 +7,7 @@ function play() {
   const readlineSync = require(`readline-sync`);
   let countMovesPlayed = countMoves;
   while(countMovesPlayed > 0) {
-    numberUser = readlineSync.question(`Enter a number (`
-    + countDigits + ` digits): `);
+    numberUser = readlineSync.question(`Enter a number (${countDigits}  digits): `);
 
     if (numberUser === numberSecret) {
       console.log(`Вы выиграли.`);
@@ -35,8 +34,7 @@ function play() {
       else
         console.log(`Вы проиграли.`);
     } else {
-      console.log(`Ошибка. Введите корректное число (`
-        + countDigits + ` значное)`);
+      console.log(`Ошибка. Введите корректное число (${countDigits} значное)`);
     }
   }
 

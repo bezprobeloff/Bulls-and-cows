@@ -2,25 +2,53 @@ const defineSupportCode = require('cucumber').defineSupportCode;
 const expect = require('chai').expect;
 
 function writeBox(x, y, player, box) {
-  const test = box.split('|').map((itemY, indexY) => {
+  const move = box.split('|').map((itemY, indexY) => {
     if (indexY === (Number(y) - 1)) {
+      // eslint-disable-next-line no-param-reassign
       itemY = itemY.split('').map((itemX, indexX) => {
         if (indexX === (Number(x) - 1) && (itemX !== 0)) {
           return player;
         }
         return itemX;
-      }).join('');
+      })
+        .join('');
     }
     return itemY;
   }).join('|');
 
-  return test;
+  return move;
 }
 
+function correctMove(x, y, box) {
+  const correct = box.split('|')
+    .filter((item, index) => index === Number(y) - 1)
+    .join('')
+    .split('')
+    .filter((item, index) => index === Number(x) - 1)
+    .join('');
+
+  if (correct !== '0') return false;
+
+  return true;
+}
+
+function getWinner(player, box) {
+  const arrBox = box.split('|');
+  const checkHorizontal = arrBox
+    .filter((item) => item.match(/.{3}/i) !== null && item.includes(player))
+    .reduce((status, item) => {status = player}, `0`)
+;
+
+    console.log(checkHorizontal);
+  return 0;
+}
+
+getWinner('1', '121|121|020');
 
 defineSupportCode(({ Given, Then, When }) => {
   let box = '';
   let player;
+  let status;
 
   Given('пустое поле', () => {
     box = '000|000|000';
@@ -35,10 +63,12 @@ defineSupportCode(({ Given, Then, When }) => {
   });
 
   Given('игрок ходит в клетку {int}, {int}', (x, y) => {
-    box = writeBox(x, y, player, box);
-    if (player === 1) {
+    status = correctMove(x, y, box);
+    if (status) box = writeBox(x, y, player, box);
+
+    if (player === 1 && status) {
       player = 2;
-    } else {
+    } else if (player === 2 && status) {
       player = 1;
     }
   });
@@ -48,7 +78,13 @@ defineSupportCode(({ Given, Then, When }) => {
   });
 
   Then('возвращается ошибка', () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+    // eslint-disable-next-line no-unused-expressions
+    expect(status).to.false;
   });
+
+  Then('победил игрок {int}', (int) => {
+    // Then('победил игрок {float}', function (float) {
+      // Write code here that turns the phrase above into concrete actions
+      return 'pending';
+    });
 });

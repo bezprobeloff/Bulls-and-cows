@@ -36,7 +36,13 @@ function getWinner(player, box) {
   const arrBox = box.split('|');
   const checkHorizontal = arrBox
     .filter((item) => item.match(/(.)\1{2}/i) !== null);
+  let arrVertical = [];
 
+  for (let i = 0; i < arrBox.length() - 1; i++) {
+
+  }
+  const checkVertical = arrBox
+    .
     console.log(checkHorizontal);
   return 0;
 }

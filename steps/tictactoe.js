@@ -35,15 +35,13 @@ function correctMove(x, y, box) {
 function getWinner(player, box) {
   const arrBox = box.split('|');
   const checkHorizontal = arrBox
-    .filter((item) => item.match(/.{3}/i) !== null && item.includes(player))
-    .reduce((status, item) => {status = player}, `0`)
-;
+    .filter((item) => item.match(/(.)\1{2}/i) !== null);
 
     console.log(checkHorizontal);
   return 0;
 }
 
-getWinner('1', '121|121|020');
+getWinner('1', '121|111|020');
 
 defineSupportCode(({ Given, Then, When }) => {
   let box = '';

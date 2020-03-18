@@ -34,20 +34,24 @@ function correctMove(x, y, box) {
 
 function getWinner(player, box) {
   const arrBox = box.split('|');
+  // создаем массив переводим вертикальные строки в горизонтальные
+  const arrVertical = ['', '', ''];
+  arrBox.forEach((item) => {
+    item.split('').forEach((char, index) => {
+      arrVertical[index] += char;
+    });
+  });
   const checkHorizontal = arrBox
     .filter((item) => item.match(/(.)\1{2}/i) !== null);
-  let arrVertical = [];
 
-  for (let i = 0; i < arrBox.length() - 1; i++) {
+  const checkVertical = arrVertical
+    .filter((item) => item.match(/(.)\1{2}/i) !== null);
 
-  }
-  const checkVertical = arrBox
-    .
-    console.log(checkHorizontal);
+
   return 0;
 }
 
-getWinner('1', '121|111|020');
+getWinner('1', '121|121|222');
 
 defineSupportCode(({ Given, Then, When }) => {
   let box = '';

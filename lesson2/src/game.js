@@ -1,4 +1,8 @@
-let field = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+let field = [
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+];
 let currentPlayer = 1;
 
 function getField() {
@@ -6,7 +10,7 @@ function getField() {
 }
 
 function makeMove(x, y) {
-  field[y][x] = 1;
+  field[y - 1][x - 1] = 1;
 }
 
 function reset() {
@@ -21,10 +25,17 @@ function setCurrentPlayer(i) {
   currentPlayer = i;
 }
 
+function convertArrToTxt(arr) {
+  return arr
+    .map((item) => item.join(''))
+    .join('|');
+}
+
 module.exports = {
   getField,
   makeMove,
   reset,
   presetField,
   setCurrentPlayer,
+  convertArrToTxt,
 };

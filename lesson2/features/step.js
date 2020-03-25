@@ -1,5 +1,6 @@
 const { Given, Then } = require('cucumber');
 const request = require('supertest');
+const assert = require("assert");
 const app = require('../src/server');
 const controller = require('../src/game');
 
@@ -31,13 +32,11 @@ Then('поле становится {string}', (box) => {
 });
 
 Then('возвращается ошибка', () => {
-  // eslint-disable-next-line no-unused-expressions
-  //expect(status).to.false;
-  return 'pending';
+  assert.equal(controller.getStatusCorretMove(), false);
 });
 
-Then('победил игрок {int}', (int) {
-
+Then('победил игрок {int}', (player) => {
+  assert.equal(controller.getWinner(controller.getField()), player);
 });
 
 Given('поле {string}', (box) => {

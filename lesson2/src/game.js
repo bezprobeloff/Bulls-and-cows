@@ -4,6 +4,7 @@ let field = [
   [0, 0, 0],
 ];
 let currentPlayer = 1;
+let statusCorrectMove = true;
 
 function getField() {
   return field;
@@ -30,9 +31,13 @@ function setCurrentPlayer(i) {
 }
 
 function correctMove(x, y) {
-  if (field[y - 1][x - 1] !== 0) return false;
+  if (field[y - 1][x - 1] !== 0) return statusCorrectMove = false;
 
-  return true;
+  return statusCorrectMove = true;
+}
+
+function getStatusCorretMove() {
+  return statusCorrectMove;
 }
 
 // конвертируем массив в текстовый вариант
@@ -49,25 +54,25 @@ function convertTxtToArr(txt) {
       .map((itemX) => Number.parseInt(itemX, 10)));
 }
 
-function getWinner(box) {
-  const arrBox = box.split('/');
+function getWinner(arrBox) {
   // создаем массив переводим вертикальные строки в горизонтальные
   const arrVertical = ['', '', ''];
   const arrDiagonal = ['', ''];
   arrBox.forEach((item) => {
-    item.split('').forEach((char, index) => {
-      arrVertical[index] += char;
+    item.forEach((number, index) => {
+      arrVertical[index] += number;
     });
   });
 
   arrBox.forEach((item, index) => {
-    item.split('').forEach((char, indexChar) => {
-      if (index === indexChar) arrDiagonal[0] += char;
-      if (indexChar === (item.length - 1) - index) arrDiagonal[1] += char;
+    item.forEach((number, indexNumber) => {
+      if (index === indexNumber) arrDiagonal[0] += number;
+      if (indexNumber === (item.length - 1) - index) arrDiagonal[1] += number;
     });
   });
 
   const checkHorizontal = arrBox
+    .map((item) => item.join(''))
     .filter((item) => item.match(/(.)\1{2}/i) !== null);
 
   const checkVertical = arrVertical
@@ -91,4 +96,6 @@ module.exports = {
   correctMove,
   convertArrToTxt,
   convertTxtToArr,
+  getStatusCorretMove,
+  getWinner,
 };

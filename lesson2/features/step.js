@@ -1,9 +1,10 @@
 const { Given, Then } = require('cucumber');
 const request = require('supertest');
-const assert = require("assert");
+const assert = require('assert');
 const app = require('../src/server');
 const controller = require('../src/game');
 
+// eslint-disable-next-line no-unused-vars
 let lastResult = {};
 
 Given('пустое поле', () => {

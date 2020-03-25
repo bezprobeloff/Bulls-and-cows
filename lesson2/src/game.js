@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 let field = [
   [0, 0, 0],
   [0, 0, 0],
@@ -8,14 +9,6 @@ let statusCorrectMove = true;
 
 function getField() {
   return field;
-}
-
-function makeMove(x, y) {
-  if (correctMove(x, y)) {
-    field[y - 1][x - 1] = currentPlayer;
-    (currentPlayer === 1) ? setCurrentPlayer(2)
-      : setCurrentPlayer(1);
-  }
 }
 
 function reset() {
@@ -31,9 +24,20 @@ function setCurrentPlayer(i) {
 }
 
 function correctMove(x, y) {
-  if (field[y - 1][x - 1] !== 0) return statusCorrectMove = false;
+  if (field[y - 1][x - 1] !== 0) {
+    statusCorrectMove = false;
+    return statusCorrectMove;
+  }
 
-  return statusCorrectMove = true;
+  statusCorrectMove = true;
+  return statusCorrectMove;
+}
+
+function makeMove(x, y) {
+  if (correctMove(x, y)) {
+    field[y - 1][x - 1] = currentPlayer;
+    (currentPlayer === 1) ? setCurrentPlayer(2) : setCurrentPlayer(1);
+  }
 }
 
 function getStatusCorretMove() {

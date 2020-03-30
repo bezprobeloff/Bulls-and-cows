@@ -14,7 +14,6 @@
     "eslint-plugin-import": "^2.20.1"
   },
   "scripts": {
-    "cucumber": "cucumber-js features/ -r steps/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

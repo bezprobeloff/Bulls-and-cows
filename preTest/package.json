@@ -1,0 +1,19 @@
+{
+  "name": "pretest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Bulls-and-cows.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "readline-sync": "^1.4.10"
+  }
+}

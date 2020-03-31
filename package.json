@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "Тестовый проект",
   "main": "Bulls-and-cows.js",
-  "dependencies": {
-    "readline-sync": "^1.4.10"
-  },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "cucumber": "^6.0.5",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1"

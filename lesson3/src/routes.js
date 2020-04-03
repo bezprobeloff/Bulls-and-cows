@@ -16,4 +16,12 @@ router.post('/login', (req, res) => {
   res.send(200, userID);
 });
 
+router.post('/register', (req, res) => {
+  if (users.registerUser(req.body.login, req.body.password) !== -1) {
+    res.send(200, 'register ok');
+  } else {
+    res.send(400);
+  }
+});
+
 module.exports = router;

@@ -8,7 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(users.authMiddleware);
-//app.use(users.restricted);
 app.use(routes);
 
 module.exports = app;

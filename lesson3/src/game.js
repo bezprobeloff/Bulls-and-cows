@@ -4,6 +4,17 @@ let field = [
   [0, 0, 0],
   [0, 0, 0],
 ];
+
+const games = [];
+
+const game = {
+  parentUser: 'Создатель_игры',
+  player2: 'Второй_игрок',
+  field: [],
+  currentPlayer: 'Текущий игрок',
+  status: 'ПОбедитель',
+};
+
 let currentPlayer = 1;
 let statusCorrectMove = true;
 

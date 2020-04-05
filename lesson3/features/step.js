@@ -67,3 +67,15 @@ Then('успешная регистрация', () => {
 Then('{string} присутствует в базе пользоателей', (user) => {
   assert.equal(users.checkUser(user), true);
 });
+
+Given('база по умолчанию', () => {
+  assert.notDeepEqual(users.getUsers().length, 0);
+});
+
+Given('авторизация с использованием {string} и {string}', (login, password) => {
+  lastResult.statusAuth = users.checkLogin(login, password);
+});
+
+Then('успешная авторизация', () => {
+  assert.notEqual(lastResult.statusAuth, -1);
+});

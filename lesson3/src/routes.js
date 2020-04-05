@@ -6,6 +6,14 @@ router.get('/getFIeld', users.restricted, (req, res) => {
   res.send(200, controller.getField());
 });
 
+router.get('/getUsers', (req, res) => {
+  res.send(200, users.getUsers());
+});
+
+router.post('/clearUsers', (req, res) => {
+  res.send(200, users.clearUsers());
+});
+
 router.post('/move', (req, res) => {
   controller.makeMove(req.body.x, req.body.y);
   res.send(200, 'ok');
@@ -17,8 +25,9 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  if (users.registerUser(req.body.login, req.body.password) !== -1) {
-    res.send(200, 'register ok');
+  const newUser = users.registerUser(req.body.login, req.body.password);
+  if (newUser !== -1) {
+    res.send(200, newUser);
   } else {
     res.send(400);
   }

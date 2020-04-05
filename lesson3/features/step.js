@@ -5,7 +5,6 @@ const app = require('../src/server');
 const controller = require('../src/game');
 const users = require('../src/lib/users');
 
-// eslint-disable-next-line no-unused-vars
 let lastResult = {};
 
 Given('пустое поле', () => {
@@ -28,7 +27,6 @@ Given('игрок ходит в клетку {int}, {int}', (x, y) => {
 });
 
 Then('поле становится {string}', (box) => {
-
   return request(app)
     .get('/getFIeld')
     .expect(controller.convertTxtToArr(box));
@@ -47,7 +45,7 @@ Given('поле {string}', (box) => {
 });
 
 Given('пустая база пользователей', () => {
-  users.nullUsers();
+  users.clearUsers();
   assert.equal(users.getUsers().length, 0);
 });
 

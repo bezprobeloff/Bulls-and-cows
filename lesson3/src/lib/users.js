@@ -15,7 +15,7 @@ const users = [
 
 const sessions = {};
 
-function nullUsers() {
+function clearUsers() {
   users.length = 0;
 }
 
@@ -82,7 +82,7 @@ module.exports = {
   checkSessionID,
   authMiddleware,
   restricted,
-  nullUsers,
+  clearUsers,
   getUsers,
   registerUser,
   checkUser,

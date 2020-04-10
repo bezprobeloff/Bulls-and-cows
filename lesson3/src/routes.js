@@ -10,11 +10,15 @@ router.get('/getUsers', (req, res) => {
   res.send(200, users.getUsers());
 });
 
+router.get('/getSessions', (req, res) => {
+  res.send(200, users.getSessions());
+});
+
 router.post('/clearUsers', (req, res) => {
   res.send(200, users.clearUsers());
 });
 
-router.post('/move', (req, res) => {
+router.post('/move', users.restricted, (req, res) => {
   controller.makeMove(req.body.x, req.body.y);
   res.send(200, 'ok');
 });

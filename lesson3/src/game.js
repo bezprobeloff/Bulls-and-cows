@@ -18,6 +18,14 @@ const game = {
 let currentPlayer = 1;
 let statusCorrectMove = true;
 
+function getGame() {
+  return game;
+}
+
+// function createGame() {
+
+// }
+
 function getField() {
   return field;
 }
@@ -113,4 +121,5 @@ module.exports = {
   convertTxtToArr,
   getStatusCorretMove,
   getWinner,
+  getGame,
 };

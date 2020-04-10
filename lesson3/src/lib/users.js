@@ -27,6 +27,10 @@ function checkSessionID(sessionID) {
   return sessions[sessionID];
 }
 
+function getSessions() {
+  return sessions;
+}
+
 function authMiddleware(req, res, next) {
   // console.log('authMiddleware is running');
   const userData = checkSessionID(req.headers.authorization);
@@ -34,6 +38,7 @@ function authMiddleware(req, res, next) {
   next();
 }
 
+// проверка наличия юзера в базе
 function checkUser(newUser) {
   const user = users.find((item) => item.login === newUser);
   if (user) {
@@ -42,8 +47,10 @@ function checkUser(newUser) {
   return false;
 }
 
+// проверка авторизации пользователя
+// если успешно, то возвращает sessionID
 function checkLogin(login, password) {
-  const user = users.find((item) => item.login === login && item.password === password);
+  const user = users.find((item) => (item.login === login) && (item.password === password));
   if (user) {
     const sessionID = uuid.v4();
     sessions[sessionID] = {
@@ -86,4 +93,5 @@ module.exports = {
   getUsers,
   registerUser,
   checkUser,
+  getSessions,
 };

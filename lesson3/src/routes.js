@@ -18,6 +18,10 @@ router.post('/clearUsers', (req, res) => {
   res.send(200, users.clearUsers());
 });
 
+router.get('/getListGames', users.restricted, (req, res) => {
+  res.send(200, controller.getListGames());
+});
+
 router.post('/move', users.restricted, (req, res) => {
   controller.makeMove(req.body.x, req.body.y);
   res.send(200, 'ok');

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-let field = [
+const NEW_FIELD = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
@@ -7,12 +7,13 @@ let field = [
 
 const games = [];
 
-const game = {
+const gameTest = {
   parentUser: 'Создатель_игры',
   player2: 'Второй_игрок',
   field: [],
   currentPlayer: 'Текущий игрок',
-  status: 'ПОбедитель',
+  winner: '',
+  status: 'доступна',
 };
 
 let currentPlayer = 1;
@@ -22,16 +23,27 @@ function getGame() {
   return game;
 }
 
-// function createGame() {
-
-// }
-
-function getField() {
-  return field;
+function getListGames() {
+  return games;
 }
 
-function reset() {
-  field = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+function createGame(parentUser) {
+  const newGame = {
+    gameId: games.length + 1,
+    parentUser,
+    field: NEW_FIELD,
+    currentPlayer: parentUser,
+    status: true,
+  };
+  games.push(newGame);
+}
+
+function getField(game) {
+  return game.field;
+}
+
+function reset(game) {
+  game.field = NEW_FIELD;
 }
 
 function presetField(newField) {
@@ -122,4 +134,6 @@ module.exports = {
   getStatusCorretMove,
   getWinner,
   getGame,
+  getListGames,
+  createGame,
 };

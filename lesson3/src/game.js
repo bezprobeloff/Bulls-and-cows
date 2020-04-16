@@ -20,7 +20,7 @@ let currentPlayer = 1;
 let statusCorrectMove = true;
 
 function getGame() {
-  return game;
+  return games[0];
 }
 
 function getListGames() {
@@ -38,16 +38,16 @@ function createGame(parentUser) {
   games.push(newGame);
 }
 
-function getField(game) {
-  return game.field;
+function getField() {
+  return games[0].field;
 }
 
-function reset(game) {
-  game.field = NEW_FIELD;
+function reset() {
+  games[0].field = NEW_FIELD;
 }
 
 function presetField(newField) {
-  field = newField;
+  games[0].field = newField;
 }
 
 function setCurrentPlayer(i) {
@@ -55,7 +55,7 @@ function setCurrentPlayer(i) {
 }
 
 function correctMove(x, y) {
-  if (field[y - 1][x - 1] !== 0) {
+  if (games[0].field[y - 1][x - 1] !== 0) {
     statusCorrectMove = false;
     return statusCorrectMove;
   }
@@ -66,7 +66,7 @@ function correctMove(x, y) {
 
 function makeMove(x, y) {
   if (correctMove(x, y)) {
-    field[y - 1][x - 1] = currentPlayer;
+    games[0].field[y - 1][x - 1] = currentPlayer;
     (currentPlayer === 1) ? setCurrentPlayer(2) : setCurrentPlayer(1);
   }
 }

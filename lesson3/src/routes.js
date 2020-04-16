@@ -2,7 +2,16 @@ const router = require('express').Router();
 const controller = require('./game');
 const users = require('./lib/users');
 
-router.get('/getFIeld', users.restricted, (req, res) => {
+router.post('/createGame', (req, res) => {
+  res.send(200, controller.createGame('parentUser'));
+});
+
+router.post('/resetField', (req, res) => {
+  res.send(200, controller.reset());
+});
+
+//router.get('/getFIeld', users.restricted, (req, res) => {
+router.get('/getFIeld', (req, res) => {
   res.send(200, controller.getField());
 });
 
@@ -18,11 +27,13 @@ router.post('/clearUsers', (req, res) => {
   res.send(200, users.clearUsers());
 });
 
-router.get('/getListGames', users.restricted, (req, res) => {
+//router.get('/getListGames', users.restricted, (req, res) => {
+router.get('/getListGames', (req, res) => {
   res.send(200, controller.getListGames());
 });
 
-router.post('/move', users.restricted, (req, res) => {
+//router.post('/move', users.restricted, (req, res) => {
+router.post('/move', (req, res) => {
   controller.makeMove(req.body.x, req.body.y);
   res.send(200, 'ok');
 });
